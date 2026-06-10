@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NÉON CUISINE — Prototype UI</title>
+<style>
+  :root{
+    --bg:#0A0A0F; --surface:#14141C; --surface2:#1C1C28;
+    --neon:#A855F7; --red:#FF2D55; --text:#F5F5F7; --muted:#8A8A99;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%, #1a0f2e 0%, var(--bg) 55%);
+    color:var(--text);min-height:100vh;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    display:flex;flex-direction:column;align-items:center;gap:32px;padding:40px 16px;
+  }
+  h1.brand{
+    font-family:'Space Grotesk',system-ui;font-weight:700;letter-spacing:.18em;
+    font-size:22px;text-transform:uppercase;
+    color:#fff;text-shadow:0 0 12px var(--neon),0 0 28px rgba(168,85,247,.6);
+  }
+  .stage{display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+  /* --- iPhone frame --- */
+  .phone{
+    width:300px;height:640px;background:var(--surface);
+    border-radius:42px;border:1px solid rgba(168,85,247,.25);
+    box-shadow:0 0 0 8px #05050a,0 18px 60px rgba(0,0,0,.7),0 0 40px rgba(168,85,247,.18);
+    overflow:hidden;position:relative;display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:120px;height:24px;background:#05050a;border-radius:0 0 16px 16px;z-index:5}
+  .scr{flex:1;overflow:hidden;display:flex;flex-direction:column;padding:42px 18px 18px}
+  .label{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .screen-title{font-family:'Space Grotesk',system-ui;font-weight:600;font-size:20px;margin-bottom:14px}
+
+  /* --- Screen 1: scan camera --- */
+  .cam{flex:1;border-radius:var(--radius);position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#241b33,#0d0d14);
+    border:1px solid rgba(255,45,85,.2)}
+  .frame{position:absolute;inset:34px;border:2px solid var(--neon);border-radius:14px;
+    box-shadow:0 0 18px rgba(168,85,247,.6),inset 0 0 18px rgba(168,85,247,.25)}
+  .scanline{position:absolute;left:34px;right:34px;height:2px;background:var(--red);
+    box-shadow:0 0 14px var(--red);animation:scan 2.4s ease-in-out infinite}
+  @keyframes scan{0%,100%{top:40px}50%{top:90%}}
+  .corner{position:absolute;width:18px;height:18px;border:2px solid var(--red)}
+  .veg{position:absolute;font-size:30px;filter:drop-shadow(0 0 6px rgba(0,0,0,.6))}
+  .shutter{width:62px;height:62px;border-radius:50%;margin:16px auto 4px;
+    background:radial-gradient(circle at 50% 40%,#fff,#d0d0d8);
+    box-shadow:0 0 0 4px rgba(255,255,255,.15),0 0 26px var(--red)}
+
+  /* --- Screen 2: suggestions --- */
+  .card{border-radius:var(--radius);overflow:hidden;margin-bottom:14px;position:relative;
+    background:var(--surface2);border:1px solid rgba(255,255,255,.06)}
+  .card .hero{height:118px;display:flex;align-items:flex-end;padding:10px 12px;
+    background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.85)),
+      linear-gradient(135deg,#3a2350,#120c1c);position:relative}
+  .card .hero.b{background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.85)),
+      linear-gradient(135deg,#4a1320,#120c1c)}
+  .emoji{position:absolute;top:8px;right:12px;font-size:40px;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+  .ctitle{font-family:'Space Grotesk';font-weight:600;font-size:15px}
+  .badge{display:inline-block;font-size:10px;padding:3px 8px;border-radius:20px;
+    background:rgba(168,85,247,.18);color:var(--neon);border:1px solid rgba(168,85,247,.5);
+    box-shadow:0 0 10px rgba(168,85,247,.3)}
+  .meta{display:flex;gap:8px;align-items:center;padding:8px 12px;color:var(--muted);font-size:11px}
+  .gourm{margin-left:auto;color:var(--red);font-weight:600;
+    text-shadow:0 0 10px rgba(255,45,85,.5)}
+
+  /* --- Screen 3: recipe detail --- */
+  .heroBig{height:180px;border-radius:var(--radius);position:relative;display:flex;align-items:flex-end;
+    padding:14px;margin-bottom:12px;
+    background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.9)),
+      linear-gradient(135deg,#3a2350,#120c1c)}
+  .ing{display:flex;justify-content:space-between;padding:8px 2px;font-size:13px;
+    border-bottom:1px solid rgba(255,255,255,.05)}
+  .ing b{color:var(--neon);font-variant-numeric:tabular-nums}
+  .perone{position:absolute;top:14px;right:14px}
+  .scroll{overflow-y:auto;flex:1;padding-right:4px}
+  .scroll::-webkit-scrollbar{width:0}
+  .cap{color:var(--muted);font-size:12px;margin-top:18px;text-align:center;max-width:920px}
+</style>
+</head>
+<body>
+  <h1 class="brand">◆ Néon Cuisine</h1>
+  <div class="stage">
+
+    <!-- SCREEN 1 : SCAN -->
+    <div class="phone"><div class="notch"></div><div class="scr">
+      <div class="label">Étape 2 · Scan caméra</div>
+      <div class="screen-title">Scanne ton frigo</div>
+      <div class="cam">
+        <div class="frame"></div>
+        <div class="scanline"></div>
+        <div class="veg" style="top:60px;left:50px">🥔</div>
+        <div class="veg" style="top:120px;right:46px">🧀</div>
+        <div class="veg" style="top:210px;left:70px">🥓</div>
+        <div class="veg" style="bottom:80px;right:64px">🧅</div>
+        <div class="corner" style="top:24px;left:24px;border-right:0;border-bottom:0"></div>
+        <div class="corner" style="bottom:24px;right:24px;border-left:0;border-top:0"></div>
+      </div>
+      <div class="shutter"></div>
+      <div style="text-align:center;color:var(--muted);font-size:11px">Détection en direct…</div>
+    </div></div>
+
+    <!-- SCREEN 2 : SUGGESTIONS -->
+    <div class="phone"><div class="notch"></div><div class="scr">
+      <div class="label">Étape 6 · Suggestions</div>
+      <div class="screen-title">2 vraies recettes</div>
+      <div class="scroll">
+        <div class="card">
+          <div class="hero"><span class="emoji">🧀</span><span class="ctitle">Tartiflette au Reblochon</span></div>
+          <div class="meta">⏱ 45 min · 620 kcal <span class="gourm">★ 7.7</span></div>
+        </div>
+        <div class="card">
+          <div class="hero b"><span class="emoji">🍔</span><span class="ctitle">Burger Reblochon coulant</span></div>
+          <div class="meta">⏱ 30 min · 720 kcal <span class="gourm">★ 8.4</span></div>
+        </div>
+        <div class="card">
+          <div class="hero"><span class="emoji">🍛</span><span class="ctitle">Colombo indo-créole</span></div>
+          <div class="meta">⏱ 50 min · 540 kcal <span class="gourm">★ 6.9</span></div>
+        </div>
+        <div class="card">
+          <div class="hero" style="background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.85)),linear-gradient(135deg,#1f2a3a,#0d0d14)">
+            <span class="emoji">🍳</span><span class="ctitle">Omelette paysanne</span></div>
+          <div class="meta">⏱ 15 min · 380 kcal <span class="gourm">★ 2.7</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- SCREEN 3 : DETAIL -->
+    <div class="phone"><div class="notch"></div><div class="scr">
+      <div class="label">Étape 7 · Détail recette</div>
+      <div class="scroll">
+        <div class="heroBig">
+          <span class="badge perone">Pour 1 personne</span>
+          <span class="emoji" style="font-size:54px;top:auto;bottom:54px">🧀</span>
+          <div>
+            <div style="font-family:'Space Grotesk';font-weight:600;font-size:19px">Tartiflette au Reblochon</div>
+            <div style="color:var(--muted);font-size:11px">620 kcal · 45 min · source Spoonacular</div>
+          </div>
+        </div>
+        <div class="label">Ingrédients pesés</div>
+        <div class="ing"><span>Pomme de terre</span><b>250 g</b></div>
+        <div class="ing"><span>Reblochon</span><b>80 g</b></div>
+        <div class="ing"><span>Lardon fumé</span><b>60 g</b></div>
+        <div class="ing"><span>Oignon</span><b>1/2</b></div>
+        <div class="ing"><span>Crème fraîche</span><b>15 g</b></div>
+        <div class="ing"><span>Vin blanc</span><b>3 cl</b></div>
+        <div class="ing"><span>Sel / poivre</span><b>à votre goût</b></div>
+      </div>
+      <div style="margin-top:10px;text-align:center;background:linear-gradient(90deg,var(--neon),var(--red));
+        padding:13px;border-radius:16px;font-weight:600;color:#fff;
+        box-shadow:0 0 24px rgba(168,85,247,.5)">▶ Lancer le mode cuisine</div>
+    </div></div>
+
+  </div>
+  <p class="cap">Maquette statique du design system (dark mode cyberpunk, accents néon violet
+  #A855F7 / rouge #FF2D55, typo Space Grotesk + Inter). Ouvre ce fichier dans un navigateur.
+  Les données affichées correspondent à la sortie réelle de <code>poc/demo.js</code>.</p>
+</body>
+</html>

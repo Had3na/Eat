@@ -177,9 +177,21 @@ Recette finale affichée
 
 ---
 
-## 5. Prochaines étapes suggérées
+## 5. Livrables de ce dépôt
 
-1. Maquettes haute-fidélité (Figma) du design system néon.
-2. POC du moteur de matching + scaling sur API Spoonacular.
+| Livrable | Emplacement | Comment l'utiliser |
+|----------|-------------|--------------------|
+| Prototype UI (3 écrans, design néon) | `design/prototype.html` | Ouvrir dans un navigateur |
+| Contrat d'API v1 | `docs/API.md` | Référence backend / front |
+| POC moteur (matching + scaling 1 pers.) | `poc/` | `cd poc && npm run demo` puis `npm test` |
+
+Le POC produit exactement la recette de la simulation (Tartiflette divisée par 6 :
+250 g de pommes de terre, 80 g de Reblochon, ½ oignon…) et garantit l'absence
+d'invention (sélection de `recipe_id` existants uniquement).
+
+## 6. Prochaines étapes suggérées
+
+1. Maquettes haute-fidélité Figma à partir de `design/prototype.html`.
+2. Brancher le POC sur l'API Spoonacular/Edamam réelle (remplacer `poc/data`).
 3. Spike de reconnaissance d'ingrédients (Clarifai Food vs Cloud Vision).
-4. Architecture backend détaillée + contrat d'API.
+4. Implémenter les endpoints de `docs/API.md` (NestJS/Go).
