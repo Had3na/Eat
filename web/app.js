@@ -201,4 +201,25 @@ function escapeHtml(s) {
 }
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+/* ---------- Installation PWA (Android) ---------- */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.createElement('button');
+  btn.textContent = "⬇️ Installer l'app";
+  btn.style.cssText = `position:fixed;right:14px;bottom:18px;z-index:70;padding:12px 16px;
+    border-radius:24px;font-weight:700;font-size:13px;color:#fff;
+    background:linear-gradient(90deg,var(--neon),var(--red));
+    box-shadow:0 0 24px rgba(168,85,247,.55)`;
+  btn.onclick = async () => {
+    btn.remove();
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  };
+  document.body.appendChild(btn);
+});
+window.addEventListener('appinstalled', () => toast('Néon Cuisine installée ✓'));
+
 renderHome();
