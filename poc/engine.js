@@ -8,7 +8,15 @@
  * Principe anti-hallucination : on ne genere JAMAIS de recette. On selectionne
  * uniquement des recipe_id existants d'une base licenciee (ici poc/data),
  * puis on recalibre les quantites pour exactement une personne.
+ *
+ * Module universel (UMD) : utilisable cote Node (require) ET dans le
+ * navigateur (window.NeonEngine) — la web app reutilise donc le meme moteur.
  */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.NeonEngine = api;
+})(typeof self !== 'undefined' ? self : this, function () {
 
 const PANTRY_STAPLES = new Set([
   'sel', 'poivre', 'eau', 'huile', 'beurre', 'sucre', 'muscade', 'ail'
@@ -146,10 +154,12 @@ function generateMeals(pantry, recipes) {
     .sort((a, b) => b.gourmandise - a.gourmandise);
 }
 
-module.exports = {
+return {
   generateMeals,
   matchRecipes,
   scaleToOnePerson,
   gourmandiseScore,
   PANTRY_STAPLES
 };
+
+});

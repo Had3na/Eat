@@ -182,8 +182,15 @@ Recette finale affichée
 | Livrable | Emplacement | Comment l'utiliser |
 |----------|-------------|--------------------|
 | Prototype UI (3 écrans, design néon) | `design/prototype.html` | Ouvrir dans un navigateur |
+| **Web app fonctionnelle** | `web/` | `node web/serve.js` puis http://localhost:5173 |
 | Contrat d'API v1 | `docs/API.md` | Référence backend / front |
 | POC moteur (matching + scaling 1 pers.) | `poc/` | `cd poc && npm run demo` puis `npm test` |
+
+La web app (`web/`) est une SPA statique sans build qui **réutilise le moteur du
+POC** (`poc/engine.js` en module universel UMD) et la base `poc/data/recipes.json`.
+Elle couvre le parcours complet : garde-manger (saisie + dictée vocale Web Speech +
+scan simulé), génération triée par gourmandise, et détail recette pour 1 personne —
+le tout dans le design dark/néon.
 
 Le POC produit exactement la recette de la simulation (Tartiflette divisée par 6 :
 250 g de pommes de terre, 80 g de Reblochon, ½ oignon…) et garantit l'absence
