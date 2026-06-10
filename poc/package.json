@@ -1,0 +1,11 @@
+{
+  "name": "neon-cuisine-poc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "POC du moteur de recettes NEON CUISINE : matching + scaling 1 personne + score gourmandise.",
+  "scripts": {
+    "demo": "node demo.js",
+    "test": "node --test engine.test.js"
+  },
+  "license": "UNLICENSED"
+}
